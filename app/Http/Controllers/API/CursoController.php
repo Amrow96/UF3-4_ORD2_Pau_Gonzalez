@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CursoResource;
 use App\Models\Curso;
 use Illuminate\Http\Request;
+
+use App\Clases\Utilitats;
+use Illuminate\Database\QueryException;
 
 class CursoController extends Controller
 {
@@ -15,7 +19,8 @@ class CursoController extends Controller
      */
     public function index()
     {
-        //
+        $cursos = Curso::all();
+        return new CursoResource($cursos);
     }
 
     /**
@@ -26,7 +31,21 @@ class CursoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $curso = new Curso();
+        $curso->nombre = $request->input('nombre');
+        $curso->codigo = $request->input('codigo');
+        $curso->descripcion = $request->input('descripcion');
+        $curso->usuario_username = $request->input('usuario_username');
+
+        try {
+            $curso->save();
+            $respuesta = (new CursoResource($curso))->response()->statusCode(201);
+        } catch (QueryException $e) {
+            $error = Utilitats::errorMessage($e);
+            $respuesta = response()->json(['error' => $error], 400);
+        }
+        return $respuesta;
     }
 
     /**
@@ -35,9 +54,10 @@ class CursoController extends Controller
      * @param  \App\Models\Curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function show(Curso $curso)
+    public function show($id)
     {
-        //
+        $curso = Curso::find($id);
+        return new CursoResource($curso);
     }
 
     /**
@@ -49,7 +69,20 @@ class CursoController extends Controller
      */
     public function update(Request $request, Curso $curso)
     {
-        //
+
+        $curso->nombre = $request->input('nombre');
+        $curso->codigo = $request->input('codigo');
+        $curso->descripcion = $request->input('descripcion');
+        $curso->usuario_username = $request->input('usuario_username');
+
+        try {
+            $curso->save();
+            $respuesta = (new CursoResource($curso))->response()->statusCode(200);
+        } catch (QueryException $e) {
+            $error = Utilitats::errorMessage($e);
+            $respuesta = response()->json(['error' => $error], 400);
+        }
+        return $respuesta;
     }
 
     /**
@@ -58,8 +91,16 @@ class CursoController extends Controller
      * @param  \App\Models\Curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Curso $curso)
+    public function destroy($id)
     {
-        //
+        $curso = Curso::find($id);
+        try {
+            $curso->destroy();
+            $respuesta = (new CursoResource($curso))->response()->statusCode(200);
+        } catch (QueryException $e) {
+            $error = Utilitats::errorMessage($e);
+            $respuesta = response()->json(['error' => $error], 400);
+        }
+        return $respuesta;
     }
 }

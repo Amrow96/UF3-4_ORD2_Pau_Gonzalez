@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UsuariResource;
 use App\Models\Usuari;
 use Illuminate\Http\Request;
+
+use App\Clases\Utilitats;
+use Illuminate\Database\QueryException;
 
 class UsuariController extends Controller
 {
@@ -15,7 +19,9 @@ class UsuariController extends Controller
      */
     public function index()
     {
-        //
+
+        $usuarios = Usuari::all();
+        return new UsuariResource($usuarios);
     }
 
     /**
@@ -26,7 +32,19 @@ class UsuariController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usuari = new Usuari();
+        $usuari->nom = $request->input('nom');
+        $usuari->password = $request->input('password');
+        $usuari->username = $request->input('username');
+
+        try {
+            $usuari->save();
+            $respuesta = (new UsuariResource($usuari))->response()->statusCode(201);
+        } catch (QueryException $e) {
+            $error = Utilitats::errorMessage($e);
+            $respuesta = response()->json(['error' => $error], 400);
+        }
+        return $respuesta;
     }
 
     /**
@@ -35,9 +53,10 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function show(Usuari $usuari)
+    public function show($username)
     {
-        //
+        $usuario = Usuari::find($username);
+        return new UsuariResource($usuario);
     }
 
     /**
@@ -49,7 +68,18 @@ class UsuariController extends Controller
      */
     public function update(Request $request, Usuari $usuari)
     {
-        //
+        $usuari->nom = $request->input('nom');
+        $usuari->password = $request->input('password');
+        $usuari->username = $request->input('username');
+
+        try {
+            $usuari->save();
+            $respuesta = (new UsuariResource($usuari))->response()->statusCode(200);
+        } catch (QueryException $e) {
+            $error = Utilitats::errorMessage($e);
+            $respuesta = response()->json(['error' => $error], 400);
+        }
+        return $respuesta;
     }
 
     /**
@@ -58,8 +88,17 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuari $usuari)
+    public function destroy($username)
     {
-        //
+        $usuari = Usuari::find($username);
+
+        try {
+            $usuari->destroy();
+            $respuesta = (new UsuariResource($usuari))->response()->statusCode(200);
+        } catch (QueryException $e) {
+            $error = Utilitats::errorMessage($e);
+            $respuesta = response()->json(['error' => $error], 400);
+        }
+        return $respuesta;
     }
 }
