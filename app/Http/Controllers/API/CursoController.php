@@ -94,13 +94,18 @@ class CursoController extends Controller
     public function destroy($id)
     {
         $curso = Curso::find($id);
-        try {
-            $curso->destroy();
-            $respuesta = (new CursoResource($curso))->response()->statusCode(200);
-        } catch (QueryException $e) {
-            $error = Utilitats::errorMessage($e);
-            $respuesta = response()->json(['error' => $error], 400);
+        if ($curso == null) {
+            $respuesta = response()->json(['error' => 'registro no encontrado'], 404);
+        } else {
+            try {
+                $curso->delete();
+                $respuesta = (new CursoResource($curso))->response()->setStatusCode(200);
+            } catch (QueryException $e) {
+                $mensaje = Utilitats::errorMessage($e);
+                $respuesta = response()->json(['error' => $mensaje], 400);
+            }
         }
+
         return $respuesta;
     }
 }
