@@ -35,10 +35,12 @@
             </li>
         </ul>
     </nav>
-</body>
-
-<div class="container">
+    <div id="app" class="container">
     @yield('principal')
 </div>
+    <script src="{{ asset('js/app.js') }}"></script>    <script src="{{ asset('js/home.js') }}"></script>
+
+</body>
+
 
 </html>

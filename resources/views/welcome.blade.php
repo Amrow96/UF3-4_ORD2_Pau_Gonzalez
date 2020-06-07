@@ -3,3 +3,6 @@
 @section('titulo')
     Cursos
 @endsection
+@section('principal')
+    
+@endsection
