@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080/DWES/UF3&4_ORD2_Pau_Gonzalez/public",
+            "url": "http://localhost:8080/DWES/UF3-4_ORD2_Pau_Gonzalez/public",
             "webRoot": "${workspaceFolder}"
         }
     ]

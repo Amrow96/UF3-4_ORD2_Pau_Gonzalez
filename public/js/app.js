@@ -94157,8 +94157,7 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-window.axios.defaults.baseURL = "/DWES/UF3&4_ORD2_Pau_Gonzalez/public/api/";
-window.axios.defaults.baseURL = "/DWES/UF3&4_ORD2_Pau_Gonzalez/public/api";
+window.axios.defaults.baseURL = "/DWES/UF3-4_ORD2_Pau_Gonzalez/public/api/";
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -94436,8 +94435,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/DWES/UF3&4_ORD2_Pau_Gonzalez/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/DWES/UF3&4_ORD2_Pau_Gonzalez/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/DWES/UF3-4_ORD2_Pau_Gonzalez/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/DWES/UF3-4_ORD2_Pau_Gonzalez/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

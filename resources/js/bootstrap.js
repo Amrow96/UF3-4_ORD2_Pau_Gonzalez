@@ -22,8 +22,7 @@ try {
 window.axios = require("axios");
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-window.axios.defaults.baseURL = "/DWES/UF3&4_ORD2_Pau_Gonzalez/public/api/";
-window.axios.defaults.baseURL = "/DWES/UF3&4_ORD2_Pau_Gonzalez/public/api";
+window.axios.defaults.baseURL = "/DWES/UF3-4_ORD2_Pau_Gonzalez/public/api/";
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

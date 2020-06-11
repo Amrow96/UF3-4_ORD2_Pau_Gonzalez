@@ -14,8 +14,8 @@ class Curso extends Model
     public $timestamps = false;
 
     //Declaramos que el curso tiene muchos usuarios
-    public function usuarios()
+    public function usuaris()
     {
-        return $this->hasMany('App\Models\Usuari', 'username');
+        return $this->belongsTo('App\Models\Usuari', 'id_usuario');
     }
 }

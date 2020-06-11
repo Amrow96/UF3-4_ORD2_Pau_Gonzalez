@@ -19,7 +19,7 @@ class CursoController extends Controller
      */
     public function index()
     {
-        $cursos = Curso::all();
+        $cursos = Curso::with('usuaris')->get();
         return new CursoResource($cursos);
     }
 
@@ -56,7 +56,7 @@ class CursoController extends Controller
      */
     public function show($id)
     {
-        $curso = Curso::find($id);
+        $curso = Curso::with('usuaris')->find($id);
         return new CursoResource($curso);
     }
 
