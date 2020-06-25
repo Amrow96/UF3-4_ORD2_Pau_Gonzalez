@@ -2093,6 +2093,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2102,13 +2144,13 @@ __webpack_require__.r(__webpack_exports__);
         codigo: null,
         nombre: "",
         descripcion: "",
-        usuario_username: ""
+        id_usuario: null
       },
       nuevoCurso: {
         codigo: null,
         nombre: "",
         descripcion: "",
-        usuario_username: ""
+        id_usuario: null
       },
       arrayCursos: [],
       columnasTabla: [{
@@ -2121,7 +2163,7 @@ __webpack_require__.r(__webpack_exports__);
         key: "descripcion",
         label: "Descripción"
       }, {
-        key: "usuario_username",
+        key: "usuaris.nom",
         label: "Nombre Usuario"
       }, "gestionar"],
       perPage: 5,
@@ -2131,8 +2173,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.obtenerUsuarios();
     this.obtenerCursos();
+    this.obtenerUsuarios();
   },
   methods: {
     obtenerCursos: function obtenerCursos() {
@@ -2156,12 +2198,11 @@ __webpack_require__.r(__webpack_exports__);
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    nuevo: function nuevo() {
-      var me = this; // me.objectCurso = null;
-
+    mostrarAdd: function mostrarAdd() {
+      var me = this;
       this.$bvModal.show("newCursoModal");
     },
-    editCurso: function editCurso(item) {
+    mostrarEdit: function mostrarEdit(item) {
       var me = this;
       me.objectCurso = item;
       this.$bvModal.show("editCursoModal");
@@ -2170,7 +2211,6 @@ __webpack_require__.r(__webpack_exports__);
       var me = this;
       axios["delete"]("/cursos/" + idObjecte).then(function (response) {
         me.obtenerCursos();
-        me.$bvModal.hide("editCursoModal");
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2178,17 +2218,16 @@ __webpack_require__.r(__webpack_exports__);
     saveCurso: function saveCurso(idObjecte) {
       var me = this;
       axios.put("/cursos/" + idObjecte, me.objectCurso).then(function (response) {
-        me.obtenerCursos();
-        me.$bvModal.hide("editCursoModal");
+        console.log("Contingut del error", response.data);
+        me.cancelar();
       })["catch"](function (error) {
         return console.log(error);
       });
     },
-    newCurso: function newCurso(idObjecte) {
+    newCurso: function newCurso(nuevoElemento) {
       var me = this;
-      axios.post("/cursos", idObjecte).then(function (response) {
-        me.obtenerCursos();
-        me.$bvModal.hide("newCursoModal");
+      axios.post("/cursos", nuevoElemento).then(function (response) {
+        me.cancelar();
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2196,6 +2235,7 @@ __webpack_require__.r(__webpack_exports__);
     cancelar: function cancelar() {
       this.obtenerCursos();
       this.$bvModal.hide("editCursoModal");
+      this.$bvModal.hide("newCursoModal");
     }
   },
   computed: {
@@ -81343,7 +81383,7 @@ var render = function() {
                       attrs: { size: "sm" },
                       on: {
                         click: function($event) {
-                          return _vm.editCurso(row.item)
+                          return _vm.mostrarEdit(row.item)
                         }
                       }
                     },
@@ -81391,225 +81431,11 @@ var render = function() {
             attrs: { type: "button" },
             on: {
               click: function($event) {
-                return _vm.nuevo()
+                return _vm.mostrarAdd()
               }
             }
           },
-          [_vm._v("Afegir Curso")]
-        ),
-        _vm._v(" "),
-        _c(
-          "b-modal",
-          {
-            attrs: { id: "editCursoModal", title: "Editar Curso" },
-            on: {
-              ok: function($event) {
-                return _vm.saveCurso(_vm.objectCurso.id)
-              },
-              hidden: function($event) {
-                return _vm.cancelar()
-              }
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "modal-footer",
-                fn: function() {
-                  return [
-                    _c(
-                      "b-button",
-                      {
-                        attrs: { size: "sm", variant: "outline-primary" },
-                        on: {
-                          click: function($event) {
-                            return _vm.cancelar()
-                          }
-                        }
-                      },
-                      [_vm._v("Cancelar")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-button",
-                      {
-                        attrs: { size: "sm", variant: "primary" },
-                        on: {
-                          click: function($event) {
-                            return _vm.saveCurso(_vm.objectCurso.id)
-                          }
-                        }
-                      },
-                      [_vm._v("Guardar")]
-                    )
-                  ]
-                },
-                proxy: true
-              }
-            ])
-          },
-          [
-            _c("form", { attrs: { action: "", method: "put" } }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-12" }, [
-                  _vm._v("\n            Codigo:\n            "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.number",
-                        value: _vm.objectCurso.codigo,
-                        expression: "objectCurso.codigo",
-                        modifiers: { number: true }
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      name: "codigo",
-                      type: "text",
-                      placeholder: "Num.codigo"
-                    },
-                    domProps: { value: _vm.objectCurso.codigo },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.objectCurso,
-                          "codigo",
-                          _vm._n($event.target.value)
-                        )
-                      },
-                      blur: function($event) {
-                        return _vm.$forceUpdate()
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-5" }, [
-                  _vm._v("\n            Nombre Curso:\n            "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.objectCurso.nombre,
-                        expression: "objectCurso.nombre"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: "telefon_alertant",
-                      placeholder: "Nom. Curs"
-                    },
-                    domProps: { value: _vm.objectCurso.nombre },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.objectCurso, "nombre", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-7" }, [
-                  _vm._v("\n            Usuari:\n            "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.objectCurso.usuario_username,
-                          expression: "objectCurso.usuario_username"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { name: "usuario_username" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.objectCurso,
-                            "usuario_username",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "option",
-                        {
-                          attrs: { disabled: "", hidden: "" },
-                          domProps: { value: null }
-                        },
-                        [_vm._v("Usuaris")]
-                      ),
-                      _vm._v(" "),
-                      _vm._l(_vm.arrayUsuarios, function(usuari) {
-                        return _c(
-                          "option",
-                          {
-                            key: usuari.username,
-                            domProps: { value: usuari.username }
-                          },
-                          [_vm._v(_vm._s(usuari.nom))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-12" }, [
-                  _vm._v("\n            Descripció:\n            "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.objectCurso.descripcion,
-                        expression: "objectCurso.descripcion"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      rows: "3",
-                      name: "descripcion",
-                      placeholder: "Descripció del curs"
-                    },
-                    domProps: { value: _vm.objectCurso.descripcion },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.objectCurso,
-                          "descripcion",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ])
-          ]
+          [_vm._v("\n            Afegir Curso\n        ")]
         ),
         _vm._v(" "),
         _c(
@@ -81664,7 +81490,9 @@ var render = function() {
             _c("form", { attrs: { action: "", method: "post" } }, [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-12" }, [
-                  _vm._v("\n            Codigo:\n            "),
+                  _vm._v(
+                    "\n                        Codigo:\n                        "
+                  ),
                   _c("input", {
                     directives: [
                       {
@@ -81701,7 +81529,9 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-5" }, [
-                  _vm._v("\n            Nombre Curso:\n            "),
+                  _vm._v(
+                    "\n                        Nombre Curso:\n                        "
+                  ),
                   _c("input", {
                     directives: [
                       {
@@ -81714,7 +81544,7 @@ var render = function() {
                     staticClass: "form-control",
                     attrs: {
                       type: "text",
-                      name: "telefon_alertant",
+                      name: "nombre",
                       placeholder: "Nom. Curs"
                     },
                     domProps: { value: _vm.nuevoCurso.nombre },
@@ -81730,7 +81560,9 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-7" }, [
-                  _vm._v("\n            Usuari:\n            "),
+                  _vm._v(
+                    "\n                        Usuari:\n                        "
+                  ),
                   _c(
                     "select",
                     {
@@ -81738,12 +81570,12 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.nuevoCurso.usuario_username,
-                          expression: "nuevoCurso.usuario_username"
+                          value: _vm.nuevoCurso.id_usuario,
+                          expression: "nuevoCurso.id_usuario"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { name: "usuario_username" },
+                      attrs: { name: "id_usuario" },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -81756,7 +81588,7 @@ var render = function() {
                             })
                           _vm.$set(
                             _vm.nuevoCurso,
-                            "usuario_username",
+                            "id_usuario",
                             $event.target.multiple
                               ? $$selectedVal
                               : $$selectedVal[0]
@@ -81778,8 +81610,8 @@ var render = function() {
                         return _c(
                           "option",
                           {
-                            key: usuari.username,
-                            domProps: { value: usuari.username }
+                            key: usuari.id_usuario,
+                            domProps: { value: usuari.id_usuario }
                           },
                           [_vm._v(_vm._s(usuari.nom))]
                         )
@@ -81790,7 +81622,9 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-12" }, [
-                  _vm._v("\n            Descripció:\n            "),
+                  _vm._v(
+                    "\n                        Descripció:\n                        "
+                  ),
                   _c("textarea", {
                     directives: [
                       {
@@ -81814,6 +81648,229 @@ var render = function() {
                         }
                         _vm.$set(
                           _vm.nuevoCurso,
+                          "descripcion",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "b-modal",
+          {
+            attrs: { id: "editCursoModal", title: "Editar Curso" },
+            on: {
+              ok: function($event) {
+                return _vm.saveCurso(_vm.objectCurso.id)
+              },
+              hidden: function($event) {
+                return _vm.cancelar()
+              }
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "modal-footer",
+                fn: function() {
+                  return [
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { size: "sm", variant: "outline-primary" },
+                        on: {
+                          click: function($event) {
+                            return _vm.cancelar()
+                          }
+                        }
+                      },
+                      [_vm._v("Cancelar")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { size: "sm", variant: "primary" },
+                        on: {
+                          click: function($event) {
+                            return _vm.saveCurso(_vm.objectCurso.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Guardar")]
+                    )
+                  ]
+                },
+                proxy: true
+              }
+            ])
+          },
+          [
+            _c("form", { attrs: { action: "", method: "put" } }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _vm._v(
+                    "\n                        Codigo:\n                        "
+                  ),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.objectCurso.codigo,
+                        expression: "objectCurso.codigo",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      name: "codigo",
+                      type: "text",
+                      placeholder: "Num.codigo"
+                    },
+                    domProps: { value: _vm.objectCurso.codigo },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.objectCurso,
+                          "codigo",
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-5" }, [
+                  _vm._v(
+                    "\n                        Nombre Curso:\n                        "
+                  ),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.objectCurso.nombre,
+                        expression: "objectCurso.nombre"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: "nombre",
+                      placeholder: "Nom. Curs"
+                    },
+                    domProps: { value: _vm.objectCurso.nombre },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.objectCurso, "nombre", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7" }, [
+                  _vm._v(
+                    "\n                        Usuari:\n                        "
+                  ),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model.number",
+                          value: _vm.objectCurso.id_usuario,
+                          expression: "objectCurso.id_usuario",
+                          modifiers: { number: true }
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { name: "id_usuario" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return _vm._n(val)
+                            })
+                          _vm.$set(
+                            _vm.objectCurso,
+                            "id_usuario",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "option",
+                        {
+                          attrs: { disabled: "", hidden: "" },
+                          domProps: { value: null }
+                        },
+                        [_vm._v("Usuaris")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.arrayUsuarios, function(usuari) {
+                        return _c(
+                          "option",
+                          {
+                            key: usuari.id_usuario,
+                            domProps: { value: usuari.id_usuario }
+                          },
+                          [_vm._v(_vm._s(usuari.nom))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12" }, [
+                  _vm._v(
+                    "\n                        Descripció:\n                        "
+                  ),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.objectCurso.descripcion,
+                        expression: "objectCurso.descripcion"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      rows: "3",
+                      name: "descripcion",
+                      placeholder: "Descripció del curs"
+                    },
+                    domProps: { value: _vm.objectCurso.descripcion },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.objectCurso,
                           "descripcion",
                           $event.target.value
                         )
@@ -81906,7 +81963,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("main", [_c("div", [_vm._v("Hello Boiis")])])
+    return _c("main", [_c("div", [_vm._v("ComponenteUsuarios")])])
   }
 ]
 render._withStripped = true

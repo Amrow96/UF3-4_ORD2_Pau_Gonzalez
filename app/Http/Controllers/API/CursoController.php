@@ -33,14 +33,15 @@ class CursoController extends Controller
     {
 
         $curso = new Curso();
+        $curso->id = $request->input('id');
         $curso->nombre = $request->input('nombre');
         $curso->codigo = $request->input('codigo');
         $curso->descripcion = $request->input('descripcion');
-        $curso->usuario_username = $request->input('usuario_username');
+        $curso->id_usuario = $request->input('id_usuario');
 
         try {
             $curso->save();
-            $respuesta = (new CursoResource($curso))->response()->statusCode(201);
+            $respuesta = (new CursoResource($curso))->response()->setStatusCode(201);
         } catch (QueryException $e) {
             $error = Utilitats::errorMessage($e);
             $respuesta = response()->json(['error' => $error], 400);
@@ -67,17 +68,18 @@ class CursoController extends Controller
      * @param  \App\Models\Curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Curso $curso)
+    public function update(Request $request,  $id)
     {
+
+        $curso = Curso::find($id);
 
         $curso->nombre = $request->input('nombre');
         $curso->codigo = $request->input('codigo');
         $curso->descripcion = $request->input('descripcion');
-        $curso->usuario_username = $request->input('usuario_username');
-
+        $curso->id_usuario = $request->input('id_usuario');
         try {
             $curso->save();
-            $respuesta = (new CursoResource($curso))->response()->statusCode(200);
+            $respuesta = (new CursoResource($curso))->response()->setStatusCode(200);
         } catch (QueryException $e) {
             $error = Utilitats::errorMessage($e);
             $respuesta = response()->json(['error' => $error], 400);

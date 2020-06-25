@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div>Hello Boiis</div>
+    <div>ComponenteUsuarios</div>
   </main>
 </template>
 

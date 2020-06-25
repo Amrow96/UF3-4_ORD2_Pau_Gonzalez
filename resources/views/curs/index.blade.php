@@ -44,7 +44,7 @@
                         <td> {{ $curso->codigo }} </td>
                         <td> {{ $curso->nombre }} </td>
                         <td> {{ $curso->descripcion }} </td>
-                        <td> {{ $curso->usuario_username }} </td>
+                        <td> {{ $curso->id_usuario }} </td>
                         <td>
                             <form action=" {{action('CursosController@edit', $curso) }}" method="GET">
                                 <button type="submit" class="btn btn-primary btn-sm">Editar</button>

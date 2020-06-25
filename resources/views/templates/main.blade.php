@@ -30,9 +30,9 @@
             <li class="nav-item ">
             <a class="nav-link text-primary" href="{{url('/cursos')}}">Cursos</a>
             </li>
-            <li class="nav-item ">
+            {{-- <li class="nav-item ">
             <a class="nav-link text-primary" href="{{url('/usuaris')}}">Usuarios</a>
-            </li>
+            </li> --}}
         </ul>
     </nav>
     <div id="app" class="container">
